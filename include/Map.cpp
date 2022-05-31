@@ -40,6 +40,6 @@ private:
   vector<int> map_data_;
 int width_;
 
-}
+};
 
 #endif

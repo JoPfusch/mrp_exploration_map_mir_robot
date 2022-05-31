@@ -24,18 +24,21 @@ public:
 
     void start()
     {
+        int direction;
+
         switch (state)
         {
         case 0:
 
-           int direction = moveToWall();
-            state = 1;
+            direction = moveToWall();
+            //state = 1;
 
             break;
 
         case 1:
 
             followWall(direction);
+            break;
 
         default:
             break;
@@ -54,27 +57,50 @@ private:
     int act_y;
 
     int state;
+    int seq_goal = 0;    // sequence id of goal
 
+    // follow the wall as long she goes straigth
+    void followWall(int direction)
+    {
 
-// follow the wall as long she goes straigth
-void followWall(int direction)
-{
+        while (map_.isWall(act_x, act_y))
+        {
+        }
+    }
 
-while (map_.isWall(act_x,act_y))
-{
-        
-}
+    // 1 positiv x
+    // 2 negativ x
+    // 3 positiv y
+    // 4 negativ y
+    // -1 faullt
+    pair<int, int> getCordinates(int direction)
+    {
+        switch (direction)
+        {
+        case 1:
+            return make_pair(act_x + 1, act_y);
+            break;
+        case 2:
+            return make_pair(act_x - 1, act_y);
+            break;
+        case 3:
+            return make_pair(act_x + 1, act_y);
+            break;
+        case 4:
+            return make_pair(act_x + 1, act_y);
+            break;
 
-
-}
-
+        default:
+            break;
+        }
+    }
 
     // move near to the next wall
     int moveToWall()
     {
 
-        int x = act_x;
-        int y = act_y;
+        float x = act_x;
+        float y = act_y;
         // rotate about 360°
         rotate(360);
 
@@ -96,7 +122,16 @@ while (map_.isWall(act_x,act_y))
                 {
                 case 1:
 
-                    x = x - 1;
+// check on which side of the wall we are
+                    if (x < act_x)
+                    {
+                        x = x + 1;
+                    }
+                    else
+                    {
+                         x = x - 1;
+                    }
+                   
                     break;
 
                 case 2:
@@ -305,6 +340,6 @@ while (map_.isWall(act_x,act_y))
 
         return true;
     }
-}
+};
 
 #endif
